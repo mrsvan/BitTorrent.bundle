@@ -126,7 +126,13 @@ def create_directory_object(json_item):
     directory_object.title    = json_item['title']
     directory_object.summary  = json_item['synopsis']
     directory_object.duration = int(json_item['runtime']) * 60 * 60 * 1000
-    directory_object.thumb    = json_item['images']['poster']
-    directory_object.art      = json_item['images']['fanart']
+    if 'poster' in json_item['images']:
+        directory_object.thumb    = json_item['images']['poster']
+    else:
+        directory_object.thumb    = ''
+    if 'fanart' in json_item['images']:
+        directory_object.art      = json_item['images']['fanart']
+    else:
+        directory_object.art      = ''
     directory_object.key      = Callback(movie_menu, title=directory_object.title, id=json_item['_id'])
     return directory_object
